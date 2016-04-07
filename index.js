@@ -1,5 +1,4 @@
-var rx = /()/
 module.exports = function flatstr(s) {
-  rx.test(s)
+  Number(s)
   return s
 }
