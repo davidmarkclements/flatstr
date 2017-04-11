@@ -70,7 +70,7 @@ module.exports = function flatstr(s) {
 }
 ```
 
-Obviously, you could just user `Number` in your own code, and not use
+Obviously, you could just use `Number` in your own code, and not use
 this module at all. However, this module serves the purpose of preventing
 misunderstandings in your code base (and potential removal of code that
 appears to be superfluous at first glance). Tests show that the additional
