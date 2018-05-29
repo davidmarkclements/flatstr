@@ -59,22 +59,13 @@ as an optimization on the string. However, strings aren't always flattened. One 
 
 `String::Flatten` is not exposed as a JavaScript function, but it can be triggered as a side effect. 
 
-There are several ways to indirectly call `String::Flatten` (see `alt-benchmark.js`), but coercion to a number appears to be (one of) the cheapest.
+There are several ways to indirectly call `String::Flatten` (see `alt-benchmark.js`), 
+but coercion to a number appears to be (one of) the cheapest.
 
-Here's the code:
-
-```js
-module.exports = function flatstr(s) {
-  Number(s)
-  return s
-}
-```
-
-Obviously, you could just use `Number` in your own code, and not use
-this module at all. However, this module serves the purpose of preventing
-misunderstandings in your code base (and potential removal of code that
-appears to be superfluous at first glance). Tests show that the additional
-function wrapper adds negligible overhead.
+However since Node 10 the V8 version has stopped using Flatten in all 
+places identified. Thus the code has been updated to seamlessly 
+use the native runtime function `%FlattenString` without having to use 
+the `--allow-natives-syntax` flag directly. 
 
 One final note: calling flatstr too much can in fact negatively effect performance. For instance, don't call it every time you concat (if that
 was performant, v8 wouldn't be using trees in the first place). The best
