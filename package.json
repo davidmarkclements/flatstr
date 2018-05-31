@@ -1,6 +1,6 @@
 {
   "name": "flatstr",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Flattens the underlying C structures of a concatenated JavaScript string",
   "main": "index.js",
   "browser": {
