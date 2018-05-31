@@ -1,19 +1,24 @@
 'use strict'
 
-try { 
-  var flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
-} catch (e) {
+if (!process.versions || !process.versions.node || parseInt(process.versions.node.split('.')[0]) >= 10) {
   try { 
-    var v8 = require('v' + '8')
-    v8.setFlagsFromString('--allow-natives-syntax')
     var flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
-    v8.setFlagsFromString('--no-allow-natives-syntax')
   } catch (e) {
-    var flatstr = function flatstr(s) {
-      Number(s)
-      return s
+    try { 
+      var v8 = require('v' + '8')
+      v8.setFlagsFromString('--allow-natives-syntax')
+      var flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
+      v8.setFlagsFromString('--no-allow-natives-syntax')
+    } catch (e) {
+      var flatstr = function flatstr(s) {
+        Number(s)
+        return s
+      }
     }
   }
+} else flatstr = function flatstr(s) {
+  Number(s)
+  return s
 }
 
 module.exports = flatstr

@@ -3,6 +3,9 @@
   "version": "1.0.7",
   "description": "Flattens the underlying C structures of a concatenated JavaScript string",
   "main": "index.js",
+  "browser": {
+    "v8": "./v8"
+  },
   "tags": [
     "perf",
     "performance",
@@ -21,6 +24,7 @@
   "homepage": "https://github.com/davidmarkclements/flatstr#readme",
   "devDependencies": {
     "fastbench": "^1.0.1",
-    "tap": "^5.7.0"
-  }
+    "tap": "^12.0.1"
+  },
+  "dependencies": {}
 }
