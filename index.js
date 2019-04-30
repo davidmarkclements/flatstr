@@ -9,6 +9,7 @@ if (!process.versions || !process.versions.node || parseInt(process.versions.nod
       v8.setFlagsFromString('--allow-natives-syntax')
       var flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
       v8.setFlagsFromString('--no-allow-natives-syntax')
+      process.nextTick(flatstr, '')
     } catch (e) {
       var flatstr = function flatstr(s) {
         Number(s)
