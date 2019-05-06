@@ -7,9 +7,18 @@ if (!process.versions || !process.versions.node || parseInt(process.versions.nod
     try { 
       var v8 = require('v' + '8')
       v8.setFlagsFromString('--allow-natives-syntax')
-      var flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
+      var _flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
+      var flatstr = (s) => {
+        try {
+          return _flatstr(s)
+        } catch (e) {
+          v8.setFlagsFromString('--allow-natives-syntax')
+          _flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
+          v8.setFlagsFromString('--no-allow-natives-syntax')
+          return s
+        }
+      }
       v8.setFlagsFromString('--no-allow-natives-syntax')
-      process.nextTick(flatstr, '')
     } catch (e) {
       var flatstr = function flatstr(s) {
         Number(s)
