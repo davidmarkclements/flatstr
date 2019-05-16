@@ -1,5 +1,7 @@
+'use strict'
+var nul = process.platform === 'win32' ? '\\\\.\\NUL' : '/dev/null'
 var bench = require('fastbench')
-var stream = require('fs').createWriteStream('/dev/null')
+var stream = require('fs').createWriteStream(nul)
 var flatstr = require('./')
 var largeStr = JSON.stringify(require('./package.json'))
 largeStr += largeStr 
