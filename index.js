@@ -1,35 +1,14 @@
 'use strict'
 
+// You may be tempted to copy and paste this, 
+// but take a look at the commit history first,
+// this is a moving target so relying on the module
+// is the best way to make sure the optimization
+// method is kept up to date and compatible with
+// every Node version.
 
-
-if (!process.versions || !process.versions.node || parseInt(process.versions.node.split('.')[0]) >= 8) {
-  try { 
-    var flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
-  } catch (e) {
-    try { 
-      var v8 = require('v' + '8')
-      v8.setFlagsFromString('--allow-natives-syntax')
-      var _flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
-      var flatstr = (s) => {
-        try {
-          return _flatstr(s)
-        } catch (e) {
-          v8.setFlagsFromString('--allow-natives-syntax')
-          _flatstr = Function('s', 'return typeof s === "string" ? %FlattenString(s) : s')
-          v8.setFlagsFromString('--no-allow-natives-syntax')
-          return s
-        }
-      }
-      v8.setFlagsFromString('--no-allow-natives-syntax')
-    } catch (e) {
-      var flatstr = function flatstr(s) {
-        Number(s)
-        return s
-      }
-    }
-  }
-} else flatstr = function flatstr(s) {
-  Number(s)
+function flatstr (s) {
+  s | 0
   return s
 }
 
