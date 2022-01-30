@@ -1,3 +1,3 @@
-declare function flatstr<T>(s: T): T;
-
-export default flatstr;
+declare module "flatstr" {
+    export default function flatstr(str: string): string;
+}
